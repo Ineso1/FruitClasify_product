@@ -1,0 +1,20 @@
+{
+  "name": "servidor_web",
+  "version": "1.0.0",
+  "description": "Servidor web",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "proxy": "http://localhost:6000/",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
