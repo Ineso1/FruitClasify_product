@@ -5,7 +5,6 @@ Creación de un sistema industrial, con el cual se puedan analizar variedad de f
 https://drive.google.com/drive/folders/1sFi9FZ5CYVEdVZt0g3_yMmRyJmRK-tTw?usp=sharing
 
 **Sistema camara y sensores**<br></br>!
-[Uploading WhatsApp_Video_2023-01-13_at_15_32_34_AdobeExpress.gif…]()
 ![407391ad-16f2-4498-9aa2-b8d1290b4815](https://user-images.githubusercontent.com/84602829/212422832-d65316a2-2731-4f08-9599-9cd4843109bb.jpg)
 
 
