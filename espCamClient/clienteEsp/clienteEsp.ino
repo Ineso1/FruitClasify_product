@@ -28,14 +28,14 @@
 #include <ESP32Servo.h>
 
 // Replace with your network credentials
-//const char* ssid = "INFINITUM1C84";
-//const char* password = "7g9N9n9YA7";
+//const char* ssid = "********";
+//const char* password = "********";
 
 //const char* ssid = "Iphone de Cesar";
 //const char* password = "holamundo";
 
-const char* ssid = "INFINITUM6CDF";
-const char* password = "Pm2Fb9Zv3d";
+const char* ssid = "*******";
+const char* password = "*******";
 
 AsyncWebServer server(80);
 
@@ -63,13 +63,13 @@ boolean takeNewPhoto = false;
 #define PCLK_GPIO_NUM     22
 
 HTTPClient client;
-String serverClasification = "http://192.168.1.76:5000/newSample";
-String serverDB = "http://192.168.1.76:6000/newSample";
-//String serverClasification = "http://192.168.1.70:5000/newSample";
-//Mi ip 192.168.1.70
+String serverClasification = "http://192.168.10.84:5000/newSample";
+String serverDB = "http://192.168.10.84:6000/newSample";
+//String serverClasification = "http://192.168.10.70:5000/newSample";
+//Mi ip 192.168.10.70
 
-#define infraTest   14
-#define pulsoCalidad   15
+#define infraTest   15
+#define pulsoCalidad   14
 #define SERVO1   12
 #define SERVO2   13
 bool Captura = false;
@@ -172,6 +172,7 @@ void activador(){
     else{
     Serial.println("\nCaptura exitosa");
     postingImage(fb);
+    delay(200);
     }
     esp_camera_fb_return(fb);
 }
@@ -235,13 +236,13 @@ void clasify(String response){
 
 void desechar(){
   Serial.println("Desechado");
-  servo1.attach(SERVO1);
-  servo2.attach(SERVO2);
+  servo1.attach(SERVO1,900,2100);
+  servo2.attach(SERVO2,900,2100);
 
-  servo1.write(0);
   servo2.write(180);
   delay(1500);
-  servo2.write(0);
+  servo2.write(90);
+  delay(100);
   }
 
 void procederProceso(int calidad){
@@ -250,12 +251,11 @@ void procederProceso(int calidad){
   Calidad = calidad;
   digitalWrite(pulsoCalidad, Calidad);
   
-  servo1.attach(SERVO1);
-  servo2.attach(SERVO2);
-  servo2.write(0);
-  servo1.write(90);
+  servo1.attach(SERVO1,900,2100);
+  servo1.write(180);
   delay(1500);
-  servo1.write(0);
+  servo1.write(90);
+  delay(100);
   }
 
 void setup()
@@ -265,10 +265,10 @@ void setup()
   pinMode(infraTest, INPUT_PULLUP);
   pinMode(pulsoCalidad, OUTPUT);
 
-  servo1.attach(SERVO1);
-  servo2.attach(SERVO2);
-  servo1.write(0);
-  servo2.write(0);
+  servo1.attach(SERVO1,900,2100);
+  servo2.attach(SERVO2,900,2100);
+  servo1.write(90);
+  servo2.write(90);
   /* Intento coneccion a la red local */
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -299,9 +299,31 @@ void setup()
 
 void loop()
 {   
+
     Captura = !digitalRead(infraTest);
+    Serial.println(Captura);
+
     if(Captura){
       activador();
       delay(500);
       }
+
+    char input;
+    input = Serial.read();
+    if(input == '1'){
+      procederProceso(0);
+    }
+    else if(input == '2'){
+      procederProceso(1);
+    }
+    else if(input == '3'){
+      desechar();
+    }
+    else{
+      servo1.attach(SERVO1,900,2100);
+      servo2.attach(SERVO2,900,2100);
+      servo1.write(90);
+      servo2.write(90);
+      }
+    
 }
